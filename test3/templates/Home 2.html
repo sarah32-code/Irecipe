@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Techno{% endblock %}
+
+{% block content %}
+<body style="margin-top: 200px">
+    <center>
+    <p style="margin-top: 150px">Please choose your device</p>
+    
+        <div  class="col-sm-12 col-md-12 col-lg-12 ">
+            
+            <button><a><img src="{{url_for('static', filename= 'img/ios.png')}}" width="300" height="300"></a></button>
+            <button><a><image src="{{url_for('static', filename= 'img/android_os_logo_icon_134673.png')}}" width="300" height="300"></a></button>
+
+        </div>
+    </center>
+
+</body>
+
+{% endblock %}
