@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Techno{% endblock %}
+
+<div>
+   
+    {% block content %}    
+    
+
+    {% for contactus in problem %}
+        <div class="panel panel-warning">
+        
+        <div class="panel-heading">Message from: {{ contactus.email }}</div>
+        
+        <div class="panel-body">{{ contactus.msg }}</div>
+        </div>
+    {% endfor %}
+        <br\>
+    {% for user in users %}
+        <div class="panel panel-success">
+        
+        <div class="panel-heading">user name: {{ user.username }}</div>
+            
+        <div class="panel-body">email: {{ user.email }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -3,11 +3,11 @@
 <div class=" container w-50">
     <form method="POST" action="">
 {{form.hidden_tag()}}
-<fieldset>
+<fieldset class="form-group">
 <legend class="border-bottom mb-4"> Please Sign up</legend>
 <div class="form-group">
     {{form.username.label(class="form-control-label")}}
-    {%if form.username.errors %}
+    {%if form.username.errors%}
     {{form.username(class="form-control form-control-lg is-invalid")}}
         {%for error in form.username.errors%}
             <span>{{error}}</span>
@@ -17,6 +17,7 @@
         {{form.username(class="form-control form-control-lg")}}
     {%endif%}
 </div>
+
 <div class="form-group">
     {{form.email.label(class="form-control-label")}}
     {%if form.email.errors %}
@@ -28,7 +29,9 @@
         
         {{form.email(class="form-control form-control-lg")}}
     {%endif%}
-</div><div class="form-group">
+</div>
+
+<div class="form-group">
     {{form.password.label(class="form-control-label")}}
     {%if form.password.errors %}
     {{form.password(class="form-control form-control-lg is-invalid")}}

@@ -1,0 +1,39 @@
+{% extends'base.html' %}
+{% block content %}
+<div class=" container w-50">
+    <form method="POST" action="">
+{{form.hidden_tag()}}
+<fieldset>
+<legend class="border-bottom mb-4"> Please Add Your Android Solution Here</legend>
+<div class="form-group">
+    {{form.prosubandroid.label(class="form-control-label")}}
+    {%if form.prosubandroid.errors %}
+    {{form.prosubandroid(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.prosubandroid.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.prosubandroid(class="form-control form-control-lg")}}
+    {%endif%}
+</div>
+<div class="form-group">
+    {{form.proandroid.label(class="form-control-label")}}
+    {%if form.proandroid.errors %}
+    {{form.proandroid(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.proandroid.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.proandroid(class="form-control form-control-lg")}}
+    {%endif%}
+</fieldset>
+<div class="form-group mt-4">
+    {{form.submit(class='btn btn-online-info')}}
+</div>
+
+    </form>
+
+</div>
+{% endblock %}

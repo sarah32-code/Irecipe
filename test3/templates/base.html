@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}TECHNO{% endblock title %}</title>
-    <script src="templates/JavaScript/jquery-3.1.1.min.js"></script>
-    <script src="templates/JavaScript/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
-    <script src="templates/JavaScript/objects.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <center>
         <h1><div class="jo">TECHNO</div></h1>
     </center>
@@ -22,15 +22,15 @@
             margin-bottom: 60px;
         }
         footer{
-            background-color: #1a75ff;
+            background-color: #d1d7df;
         }
         .footerInfo1{
             text-align: center;
 
-            color: white;
+            color: rgb(0, 0, 0);
             display: inline-block;
             margin-right: 30px;
-            font-family: cursive;
+            font-family: Monospace;
         }
         p{
             text-align: center;
@@ -38,7 +38,7 @@
             color: rgb(0, 0, 0);
             display: inline-block;
             margin-right: 30px;
-            font-family: cursive;
+            font-family: Monospace;
         }
     </style>
 
@@ -55,27 +55,31 @@
                 </button>
                 <a class="navbar-brand" href="">TECHNO</a>
             </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/Home.html">Home <span class="sr-only"></span></a></li>
+                    <li class=""><a href="/Home.html">Home <span class="sr-only"></span></a></li>
+                    {%if current_user.is_authenticated%}
+                    <li><a href="Account.html">Account</a></li>
+                    <li><a href="ContactUs.html">ContactUs</a></li>
+                    <li><a href="{{url_for('logout')}}">Logout</a></li>
+                    <li><a>Hi {{ current_user.username }}</a></li>
+                    
+                    {% if current_user.id == 1 %}
+                    <li><a href="admin.html">admin</a></li>
+                    {%endif%}
+
+                    {%else%}
                     <li><a href="/Registertion.html">Registertion</a></li>
                     <li><a href="Login.html">Login</a></li>
-                    <li><a href="Add_Solution.html">Add Solution</a></li>
-                    <li><a href="ContactUs.html">ContactUs</a></li>
 
-                   
+                    {%endif%}
+                    
 
 
 
                 </ul>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+
+
               
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -86,7 +90,18 @@
 </head>
 
 
-<body>
+<body style="   margin-left: 50px; margin-right: 50px;">
+    <div class="container w-50">
+        {%with messages=get_flashed_messages(with_categories=true)%}
+            {%if messages%}
+                {%for category,message in messages%}
+                    <div class="alert alert-{{category}}">
+                        {{message}}
+                    </div>
+                {%endfor%}
+            {%endif%}
+        {%endwith%}
+    </div>
       
     {% block content %}
     
@@ -94,7 +109,7 @@
 
 </body>
 
-<footer id = "fo" style="margin-top: 800px">
+<footer style="margin-top: 800px">
     <center>
         <div class="name-footer">
             <strong><p>TECHNO</p></strong>
@@ -106,7 +121,7 @@
             <p><a  class="footerInfo1" href="Home.html"> Home</a></p>
             <p><a  class="footerInfo1" href="Registertion.html"> Registertion</a></p>
             <p><a  class="footerInfo1" href="ContactUs.html"> ContactUs</a></p>
-            <p><a class="footerInfo1" href="Privacy.html">Privacy Policy</a></p>
+            <p><a class="footerInfo1" href="privacy.html">Privacy Policy</a></p>
 
         </div>      
     </center>

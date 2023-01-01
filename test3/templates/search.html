@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Techno{% endblock %}
+
+{% block content %}
+<br/>
+<h2>You searched for ...</h2>
+<p>{{ searched }}</p>
+<br/>
+{%for searched in postios%}
+
+    <center><h2><p>IOS</p></h2></center>
+    <br/>
+    <div class="panel panel-info ">
+    
+
+    <div class="panel-heading">subject: {{searched.prosubios}}</div>
+
+    <div class="panel-body">Solution: {{searched.proios}}</div>
+   
+    </div>
+{%endfor%}
+
+{%for searched in postandroid%}
+    <center><h2><p>Android</p></h2></center>
+    <br/>
+    <div class="panel panel-success  ">
+    
+    <div class="panel-heading">subject: {{searched.prosubandroid}}</div>
+
+    <div class="panel-body">Solution: {{searched.proandroid}}</div>
+    <br/>
+    </div>
+{%endfor%}
+
+
+{% endblock content %}

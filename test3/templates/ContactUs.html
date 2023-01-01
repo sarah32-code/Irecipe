@@ -1,172 +1,55 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:display="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>TECHNO</title>
-    <script src="JavaScript/jquery-3.1.1.min.js"></script>
-    <script src="JavaScript/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css">
+{% extends 'base.html' %}
+
+{% block title %}Techno{% endblock %}
+{% block content %}
+<div class=" container w-50">
+    <form method="POST" action="">
+{{form.hidden_tag()}}
+<fieldset class="form-group">
+    <legend class="border-bottom mb-4"> Send us a message</legend>
+    <div class="form-group">
+        {{form.username.label(class="form-control-label")}}
+        {%if form.username.errors%}
+        {{form.username(class="form-control form-control-lg is-invalid")}}
+            {%for error in form.username.errors%}
+                <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            
+            {{form.username(class="form-control form-control-lg")}}
+        {%endif%}
+    </div>
     
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <div class="form-group">
+        {{form.email.label(class="form-control-label")}}
+        {%if form.email.errors %}
+        {{form.email(class="form-control form-control-lg is-invalid")}}
+            {%for error in form.email.errors%}
+                <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            
+            {{form.email(class="form-control form-control-lg")}}
+        {%endif%}
+    </div>
+    
+    <div class="form-group">
+        {{form.msg.label(class="form-control-label")}}
+        {%if form.msg.errors %}
+        {{form.msg(class="form-control form-control-lg is-invalid")}}
+            {%for error in form.msg.errors%}
+                <span>{{error}}</span>
+            {%endfor%}
+            {%else%}
+            
+            {{form.msg(class="form-control form-control-lg")}}
+        {%endif%}
+    </div>
+</fieldset>
+    <div class="form-group mt-4">
+        {{form.submit(class='btn btn-online-info')}}
+    </div>
+</form>
 
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-
-
-    <center>
-        <h1><div class="jo">TECHNO</div></h1>
-    </center>
-    <style>
-        #ho{
-            margin-right: 140px;
-        }
-        .jo{
-            margin-top: -120px;
-            margin-bottom: 60px;
-        }
-        footer{
-            background-color: #1a75ff;
-        }
-        .footerInfo1{
-            text-align: center;
-
-            color: white;
-            display: inline-block;
-            margin-right: 30px;
-            font-family: cursive;
-        }
-        p{
-            text-align: center;
-            font-size: 180%;
-            color: rgb(0, 0, 0);
-            display: inline-block;
-            margin-right: 30px;
-            font-family: cursive;
-        }
-    </style>
-
-
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="">TECHNO</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="Home.html">Home <span class="sr-only">(current)</span></a></li>
-                    <li><a href="Registertion.html">Registertion</a></li>
-                    <li><a href="Login.html">Login</a></li>
-                    <li><a href="ContactUs.html">ContactUs</a></li>
-                   
-
-
-
-                </ul>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-              
-            </div>
-        </div>
-    </nav>
-
-
-
-</head>
-
-<body>
-    <center>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-6 pb-5">
-        
-        
-                            <!--Form with header-->
-        
-                            <form action="mail.php" method="post">
-                                <div class="card border-primary rounded-0">
-                                    <div class="card-header p-0">
-                                        <div class="bg-info text-white text-center py-2">
-                                            <h3><i class="fa fa-envelope"></i> Contact</h3>
-                                            <p class="m-0">please tell us what you need</p>
-                                        </div>
-                                    </div>
-                                    <div class="card-body p-3">
-        
-                                        <!--Body-->
-                                        <div class="form-group">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class="fa fa-user text-info"></i></div>
-                                                </div>
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="please enter your name" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
-                                                </div>
-                                                <input type="email" class="form-control" id="nombre" name="email" placeholder="example@gmail.com" required>
-                                            </div>
-                                        </div>
-        
-                                        <div class="form-group">
-                                            <div class="input-group mb-2">
-                                                <div class="input-group-prepend">
-                                                    <div class="input-group-text"><i class="fa fa-comment text-info"></i></div>
-                                                </div>
-                                                <textarea class="form-control" placeholder="tell us what you need or you comment" required></textarea>
-                                            </div>
-                                        </div>
-        
-                                        <div class="text-center">
-                                            <input type="submit" value="send" class="btn btn-info btn-block rounded-0 py-2">
-                                        </div>
-                                    </div>
-        
-                                </div>
-                            </form>
-                            
-        
-        
-                        </div>
-            </div>
-        </div>
-    </center>
-      
-</body>
-
-<footer id = "fo" style="margin-top: 50px ">
-    <center>
-        <div class="name-footer">
-            <strong><p>TECHNO</p></strong>
-        </div>
-
-        <div class="footerInfo1">
-
-            <p><a class="footerInfo1" href=""> Location</a></p>
-            <p><a  class="footerInfo1" href="Home.html"> Home</a></p>
-            <p><a  class="footerInfo1" href="Registertion.html"> Registertion</a></p>
-            <p><a  class="footerInfo1" href="ContactUs.html"> ContactUs</a></p>
-            <p><a class="footerInfo1" href="Privacy.html">Privacy Policy</a></p>
-
-        </div>      
-    </center>
-</footer>
-</html>
+</div>
+{% endblock %}

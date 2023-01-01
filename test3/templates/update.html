@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <h1>Update Account</h1>
+        <br/>
+        <form action="/update/{{account_updated.id}}" method="POST">
+            <input type="text" placeholder = "User Name" name="name" value="{{account_updated.username}}">
+            <input type="text" placeholder = "email" name="email" value="{{account_updated.email}}">
+            <input type="submit" value="account update" class="btn btn-secondry">
+        </form>
+
+    </div>
+
+
+{% endblock content%}
