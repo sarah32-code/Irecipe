@@ -28,7 +28,7 @@ while many websites help with finding solutions for ios/android devices none of 
 
 - Browser/client-side dependencies:
   - Bootstrap
-  - js
+  - JS
   - CSS
 ## Roadmap
 
