@@ -10,10 +10,33 @@
         <div  class="col-sm-12 col-md-12 col-lg-12 ">
             
             <button><a href="/IOS_Page.html"><img src="{{url_for('static', filename= 'img/ios.png')}}" width="300" height="300"></a></button>
-            <button><a href="/android.html"><image src="{{url_for('static', filename= 'img/android_os_logo_icon_134673.png')}}" width="300" height="300"></a></button>
+            <button><a href="/android.html"><image src="{{url_for('static', filename= 'img/android_os_logo_icon_134673.png')}}" width="300" height="300" margin-bottom='140px'></a></button>
 
         </div>
+
     </center>
+    <br></br>
+
+    <div class="mydiv">
+    <button type="button" style="width: 250px; justify-content: center; margin-top: 20px; " onclick="loadDoc()">Latest Versions</button>
+    </div>
+    <br></br>
+
+
+
+<p id="demo"></p>
+
+<script>
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    document.getElementById("demo").innerHTML = this.responseText;
+  }
+  xhttp.open("GET", "{{url_for('static', filename= 'img/v.txt')}}");
+  xhttp.send();
+  
+}
+</script>
 
 </body>
 

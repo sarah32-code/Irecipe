@@ -160,10 +160,10 @@ def search():
     postandroid =Android.query
     if form.validate_on_submit():
         searched = form.searched.data
-        postios = postios.filter(Ios.proios.like('%'+ searched +'%'))
-        postios = postios.order_by(Ios.proios).all()
-        postandroid = postandroid.filter(Android.proandroid.like('%'+ searched +'%'))
-        postandroid = postandroid.order_by(Android.proandroid).all()
+        postios = postios.filter(Ios.prosubios.like('%'+ searched +'%'))
+        postios = postios.order_by(Ios.prosubios).all()
+        postandroid = postandroid.filter(Android.prosubandroid.like('%'+ searched +'%'))
+        postandroid = postandroid.order_by(Android.prosubandroid).all()
         return render_template("search.html", form=form, searched=searched, postios=postios, postandroid=postandroid)
     else:
         flash("Please enter input", "danger")

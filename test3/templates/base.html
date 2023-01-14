@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap-theme.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -14,6 +14,7 @@
         <h1><div class="jo">TECHNO</div></h1>
     </center>
     <style>
+
         #ho{
             margin-right: 140px;
         }
@@ -21,8 +22,20 @@
             margin-top: -120px;
             margin-bottom: 60px;
         }
-        footer{
-            background-color: #d1d7df;
+        html{
+            height: 100%;
+        }
+        body{
+            min-height: 100%;
+            display:flex;
+            flex-direction:column;
+        }
+        footer{position: auto;
+           
+            margin-top: auto;
+            bottom: 1px;
+            width: 100vw;
+             background-color: #d1d7df;
         }
         .footerInfo1{
             text-align: center;
@@ -39,6 +52,11 @@
             display: inline-block;
             margin-right: 30px;
             font-family: Monospace;
+        }
+       .mydiv{
+        text-align: center;
+
+
         }
     </style>
 
@@ -65,7 +83,7 @@
                     <li><a>Hi {{ current_user.username }}</a></li>
                     
                     {% if current_user.id == 1 %}
-                    <li><a href="admin.html">admin</a></li>
+                    <li><a href="Admin.html">Admin</a></li>
                     {%endif%}
 
                     {%else%}
@@ -90,7 +108,7 @@
 </head>
 
 
-<body style="   margin-left: 50px; margin-right: 50px;">
+<body>
     <div class="container w-50">
         {%with messages=get_flashed_messages(with_categories=true)%}
             {%if messages%}
@@ -109,8 +127,9 @@
 
 </body>
 
-<footer style="margin-top: 800px">
+<footer class="footer">
     <center>
+
         <div class="name-footer">
             <strong><p>TECHNO</p></strong>
         </div>
@@ -119,11 +138,18 @@
 
             <p><a class="footerInfo1" href="Location.html"> Location</a></p>
             <p><a  class="footerInfo1" href="Home.html"> Home</a></p>
-            <p><a  class="footerInfo1" href="Registertion.html"> Registertion</a></p>
+            <p><a  class="footerInfo1" href="Registertion.html"> Registration</a></p>
             <p><a  class="footerInfo1" href="ContactUs.html"> ContactUs</a></p>
             <p><a class="footerInfo1" href="privacy.html">Privacy Policy</a></p>
 
-        </div>      
+        </div>
+        <div>
+        <a href="https://github.com/sarah32-code/capstone.git"><i class="btn btn-light fa fa-github" style="font-size:36px" ></i></a>
+        <a href="https://www.instagram.com/te_chno74/"><i class="btn btn-light fa fa-instagram" style="font-size:36px" ></i></a>
+        </div>
+    <div>
+        © 2023 TECHNO
+    </div>
     </center>
 </footer>
 </html>
