@@ -41,7 +41,7 @@ class AndroidForm(FlaskForm):
 class ContactUsForm(FlaskForm):
     username = StringField(label='Username',validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField(label= 'Email',validators=[DataRequired(), Email()])
-    msg = StringField(label='Write your massege',validators=[DataRequired(), Length(min=3, max=100)])
+    msg = StringField(label='Write your Message',validators=[DataRequired(), Length(min=3, max=100)])
     submit = SubmitField(label= 'Send')
 
 class SearchForm(FlaskForm):
