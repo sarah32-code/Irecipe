@@ -1,13 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import UserMixin
+from secret_key import secret_key
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 
 db = SQLAlchemy()
-def load_user(user_id):
-    return User.query.get(user_id)
 
+def get_serializer(expires_sec=300):
+    return Serializer(secret_key, expires_in = expires_sec)
 
 
 class User(db.Model, UserMixin):
@@ -19,7 +21,18 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     date_created=db.Column(db.DateTime,default=datetime.utcnow)
 
-     
+    def get_token(self, expires_sec=300):
+        serial = get_serializer(expires_sec)
+        return serial.dumps({'user_id':self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_token(token):
+        serial = get_serializer()
+        try:
+            user_id=serial.loads(token)['user_id']
+        except:
+            return None
+        return User.query.get(user_id)    
 
     def __repr__(self):
         return f'{self.username}:{self.email}:{self.date_created}'
