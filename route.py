@@ -1,13 +1,13 @@
-from test3 import app, db, mail, bcrypt
+from server import app, mail, bcrypt
 from flask import Flask, render_template, request, url_for, flash, session, redirect
-from test3.forms import RegistrationForm, LoginForm, IosForm, AndroidForm, ContactUsForm, SearchForm, ResetRequestForm, ResetPasswordForm, AccountForm
+from forms import RegistrationForm, LoginForm, IosForm, AndroidForm, ContactUsForm, SearchForm, ResetRequestForm, ResetPasswordForm, AccountForm
 from jinja2 import StrictUndefined
-from test3.model import User, Ios, Android, ContactUs
+from model import User, Ios, Android, ContactUs,db
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_mail import Message
 import os , secrets
 
-
+print ("importing routes", app)
 
 @app.route("/")
 @app.route("/Home.html")

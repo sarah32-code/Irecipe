@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField,PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, Email,ValidationError
-from test3.model import User
+from model import User
 from flask_login import login_user, logout_user, current_user, login_required
  
 class RegistrationForm(FlaskForm):

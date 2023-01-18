@@ -1,23 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
-from test3 import db, app
-from test3 import login_manager
-from flask import Flask, redirect, url_for
 from datetime import datetime
 from flask_login import UserMixin
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 
-db = SQLAlchemy(app)
-@login_manager.user_loader
+db = SQLAlchemy()
 def load_user(user_id):
     return User.query.get(user_id)
 
 
-@login_manager.unauthorized_handler
-def unauthorized():
-   
-    return redirect(url_for('Loginpage'))
 
 class User(db.Model, UserMixin):
     
@@ -27,19 +18,6 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable= False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     date_created=db.Column(db.DateTime,default=datetime.utcnow)
-  
-    def get_token(self, expires_sec=300):
-        serial = Serializer(app.config['SECRET_KEY'], expires_in = expires_sec)
-        return serial.dumps({'user_id':self.id}).decode('utf-8')
-
-    @staticmethod
-    def verify_token(token):
-        serial = Serializer(app.config['SECRET_KEY'])
-        try:
-            user_id=serial.loads(token)['user_id']
-        except:
-            return None
-        return User.query.get(user_id)
 
      
 
@@ -74,6 +52,15 @@ class ContactUs(db.Model):
     def __repr__(self):
         return f'{self.username}:{self.email}:{self.msg}'
 
-if __name__ == "__main__":
-    db.create_all()
-    app.run(debug=True)
+def connect_to_db(flask_app, db_name= "technoapp", echo=True):
+    db_uri = f'postgresql:///{db_name}'
+
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    flask_app.config['SQLALCHEMY_ECHO'] = echo
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print('Connected to the db!')
+
