@@ -8,6 +8,7 @@ while many websites help with finding solutions for ios/android devices none of 
 
 
 - As a user, I want to be able to register and log in.
+- As a user, I want to be able to update my inforamtion and reset my password
 - As a user, I want to be able to search for a Technical problem.
 - As a user, I want to be able to add solutions 
 - As a user, I want to choose my device type
@@ -16,7 +17,7 @@ while many websites help with finding solutions for ios/android devices none of 
 
 - **Database:** PostgreSQL
 - **Backend:** Python 3
-- **Frontend:** Web browser
+- **Frontend:** Web-browser
 
 ### Dependencies
 
@@ -44,4 +45,4 @@ while many websites help with finding solutions for ios/android devices none of 
 - web design and styling 
 - testing and debugging
 - Add functionality for a user to enter solutions 
-- create a video demo
+- create a video-demo
