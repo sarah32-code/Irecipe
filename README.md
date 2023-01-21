@@ -15,19 +15,16 @@ while many websites help with finding solutions for ios/android devices none of 
 - As a user, I want to add solutions if it is not found 
 ## Tech stack
 
-- **Database:** PostgreSQL
-- **Backend:** Python 3
-- **Frontend:** Web-browser
-
-### Dependencies
-
-- Python packages:
+  - PostgreSQL
+  - Python 3
   - SQLAlchemy 
-  - Flask
+  - Flask:
+    - Flask-bcrypt
+    - Flask-mail
   - Jinja
   - AJAX
-
-- Browser/client-side dependencies:
+  - It's-Dangerous
+    - TimeJSONWebSignatureSerializer
   - Bootstrap
   - JS
   - CSS
