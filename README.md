@@ -4,15 +4,16 @@ I have always seen people struggle with new technology so I decided to make an a
 ## Background
 while many websites help with finding solutions for ios/android devices none of them are simple to use. Especially for the older generations.
 
-## MVP
+## Features
 
 
-- As a user, I want to be able to register and log in.
-- As a user, I want to be able to update my inforamtion and reset my password
-- As a user, I want to be able to search for a Technical problem.
-- As a user, I want to be able to add solutions 
-- As a user, I want to choose my device type
-- As a user, I want to add solutions if it is not found 
+- Register and log in.
+- Update user inforamtion and reset user password
+- Search for a Technical problem based on user operating system
+- User able to add and search solutions 
+- Admin can delete users, wrong solutions.
+- Admin is able to view and delete messages
+- location and privacy policy
 ## Tech stack
 
   - PostgreSQL
@@ -33,16 +34,17 @@ while many websites help with finding solutions for ios/android devices none of 
 
 ### Sprint 1
 - create a data model
+- create database 
 - create templets
 - user registration and authentication
-- create database 
+- user operating system type
 - user profile page and update profile
-- user device type
+- Add functionality for a user to enter/search solutions
+
 
 ### Sprint 2
 - web design and styling 
 - testing and debugging
-- Add functionality for a user to enter solutions 
 - create a video-demo
 
 ### Installation
