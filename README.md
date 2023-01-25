@@ -45,11 +45,3 @@ while many websites help with finding solutions for ios/android devices none of 
 - Add functionality for a user to enter solutions 
 - create a video-demo
 
-## installation 
-1- clone the repastiory from GitHub
-2- activate virtual envrioment 
-    - $ cd to file
-    - $ virtualenv env
-    - $ source env/bin/activate
-3- Download requirements
-    - $ pip -r requirement
