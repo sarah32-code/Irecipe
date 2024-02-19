@@ -1,9 +1,4 @@
-Sarah Mustafa - Project Pitch
-
-I have always seen people struggle with new technology so I decided to make an app that helps them find simple step-by-step solutions to their technology problems.
-## Background
-while many websites help with finding solutions for ios/android devices none of them are simple to use. Especially for the older generations.
-
+Sarah Mustafa 
 ## Features
 
 
