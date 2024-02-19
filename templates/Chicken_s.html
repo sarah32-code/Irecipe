@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class=" container w-50">
+    <form method="POST" action="">
+{{form.hidden_tag()}}
+<fieldset>
+<legend class="border-bottom mb-4"> Please Add Your Chicken recipe Here</legend>
+<div class="form-group">
+    {{form.prosubchicken.label(class="form-control-label")}}
+    {%if form.prosubchicken.errors %}
+    {{form.prosubchicken(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.prosubchicken.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.prosubchicken(class="form-control form-control-lg")}}
+    {%endif%}
+</div>
+<div class="form-group">
+    {{form.prochicken.label(class="form-control-label")}}
+    {%if form.prochicken.errors %}
+    {{form.prochicken(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.prochicken.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.prochicken(class="form-control form-control-lg")}}
+    {%endif%}
+</fieldset>
+<div class="form-group mt-4">
+    {{form.submit(class='btn btn-online-info')}}
+</div>
+
+    </form>
+
+</div>
+{% endblock %}

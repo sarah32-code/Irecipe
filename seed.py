@@ -1,8 +1,8 @@
 import os
 
 # Drop and recreate database
-os.system(f'dropdb technoapp --if-exists')
-os.system(f'createdb technoapp')
+os.system(f'dropdb SM --if-exists')
+os.system(f'createdb SM')
 
 from model import db, connect_to_db
 import server

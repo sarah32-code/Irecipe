@@ -1,0 +1,39 @@
+{% extends'base.html' %}
+{% block content %}
+<div class=" container w-50">
+    <form method="POST" action="">
+{{form.hidden_tag()}}
+<fieldset>
+<legend class="border-bottom mb-4"> Please Add Your Fish recipe Here</legend>
+<div class="form-group">
+    {{form.prosubfish.label(class="form-control-label")}}
+    {%if form.prosubfish.errors %}
+    {{form.prosubfish(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.prosubfish.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.prosubfish(class="form-control form-control-lg")}}
+    {%endif%}
+</div>
+<div class="form-group">
+    {{form.profish.label(class="form-control-label")}}
+    {%if form.profish.errors %}
+    {{form.profish(class="form-control form-control-lg is-invalid")}}
+        {%for error in form.profish.errors%}
+            <span>{{error}}</span>
+        {%endfor%}
+        {%else%}
+        
+        {{form.profish(class="form-control form-control-lg")}}
+    {%endif%}
+</fieldset>
+<div class="form-group mt-4">
+    {{form.submit(class='btn btn-online-info')}}
+</div>
+
+    </form>
+
+</div>
+{% endblock %}

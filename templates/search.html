@@ -1,34 +1,46 @@
 {% extends 'base.html' %}
 
-{% block title %}Techno{% endblock %}
+{% block title %}Irecipe{% endblock %}
 
 {% block content %}
 <br/>
 <h2>You searched for ...</h2>
 <p>{{ searched }}</p>
 <br/>
-{%for searched in postios%}
+{%for searched in postchicken%}
 
-    <center><h2><p>IOS</p></h2></center>
+    <center><h2><p>Chicken</p></h2></center>
     <br/>
     <div class="panel panel-info ">
     
 
-    <div class="panel-heading">subject: {{searched.prosubios}}</div>
+    <div class="panel-heading">subject: {{searched.prosubchicken}}</div>
 
-    <div class="panel-body">Solution: {{searched.proios}}</div>
+    <div class="panel-body">Solution: {{searched.prochicken}}</div>
    
     </div>
 {%endfor%}
 
-{%for searched in postandroid%}
-    <center><h2><p>Android</p></h2></center>
+{%for searched in postfish%}
+    <center><h2><p>Fish</p></h2></center>
     <br/>
     <div class="panel panel-success  ">
     
-    <div class="panel-heading">subject: {{searched.prosubandroid}}</div>
+    <div class="panel-heading">subject: {{searched.prosubfish}}</div>
 
-    <div class="panel-body">Solution: {{searched.proandroid}}</div>
+    <div class="panel-body">Solution: {{searched.profish}}</div>
+    <br/>
+    </div>
+{%endfor%}
+
+{%for searched in postmeat%}
+    <center><h2><p>Meat</p></h2></center>
+    <br/>
+    <div class="panel panel-success  ">
+    
+    <div class="panel-heading">subject: {{searched.prosubmeat}}</div>
+
+    <div class="panel-body">Solution: {{searched.promeat}}</div>
     <br/>
     </div>
 {%endfor%}

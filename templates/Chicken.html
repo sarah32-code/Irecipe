@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Irecipe{% endblock %}
+
+   
+    {% block content %}
+
+    <nav class="navbar navbar-inverse">
+
+
+        <form method="POST" action="{{url_for('search')}}" class="navbar-form navbar-right"  style="margin-right: 550px;">
+            {{form.hidden_tag()}}
+            <div class="form-group">
+                <input type="text" name = "searched"class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+    </nav>
+
+    <center><button  class="btn btn-default" style="margin-top: 50px ;"><a href="/Chicken_s.html"> add Solution </a></button></center>
+    
+    
+
+    {% for chicken in problem %}
+    <div class="panel panel-info ">
+    
+    <div class="panel-heading">{{ chicken.prosubchicken}}</div>
+    
+    <div class="panel-body">{{ chicken.prosubchicken}}</div>
+    </div>
+
+{% endfor %}
+{% endblock content %}

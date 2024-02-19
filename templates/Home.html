@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Techno{% endblock %}
+{% block title %}Irecipe{% endblock %}
 
 {% block content %}
 <body>
     <center>
-    <p style="margin-top: 150px">Please choose your device</p>
+    <p style="margin-top: 150px">Please choose your Ingredient</p>
     
         <div  class="col-sm-12 col-md-12 col-lg-12 ">
             
-            <button><a href="/IOS_Page.html"><img src="{{url_for('static', filename= 'img/ios.png')}}" width="300" height="300"></a></button>
-            <button><a href="/android.html"><image src="{{url_for('static', filename= 'img/android_os_logo_icon_134673.png')}}" width="300" height="300" margin-bottom='140px'></a></button>
+          <button><a href="/Chicken.html" title="Chicken"><img src="{{ url_for('static', filename='img/Chicken.png') }}" width="300" height="300"></a></button>
+          <button><a href="/meat.html" title="Meat"><img src="{{ url_for('static', filename='img/Meat.png') }}" width="300" height="300"></a></button>
+          <button><a href="/fish.html" title="Fish"><img src="{{ url_for('static', filename='img/fish.png') }}" width="300" height="300"></a></button>
 
         </div>
 
@@ -18,7 +19,7 @@
     <br></br>
 
     <div class="mydiv">
-    <button type="button" style="width: 250px; justify-content: center; margin-top: 20px; " onclick="loadDoc()">Latest Versions</button>
+    <button type="button" style="width: 250px; justify-content: center; margin-top: 20px; " onclick="loadDoc()">About us</button>
     </div>
     <br></br>
 

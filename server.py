@@ -2,26 +2,30 @@ from flask import Flask, render_template, request, url_for, flash, session, redi
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,login_user, logout_user, current_user, login_required
 from flask_mail import Mail, Message
-from forms import RegistrationForm, LoginForm, IosForm, AndroidForm, ContactUsForm, SearchForm, ResetRequestForm, ResetPasswordForm, AccountForm
+from wtforms import StringField, PasswordField, SubmitField, SelectMultipleField
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
+from forms import MeatForm, RegistrationForm, LoginForm, ChickenForm, FishForm,MeatForm, ContactUsForm, SearchForm, ResetRequestForm, ResetPasswordForm, AccountForm
 from jinja2 import StrictUndefined
-
+from  static import img
 from smtplib import SMTP
 from flask_bcrypt import Bcrypt
-from model import connect_to_db,User, Ios, Android, ContactUs,db
+# main application file
+from model import connect_to_db, db, User, Fish, Meat, Chicken, ContactUs
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 import os , secrets
 from secret_key import secret_key
-
+from random import sample
 app=Flask(__name__)
-
-#app.config['SECRET_KEY']='this is techno db'
 app.secret_key=secret_key
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/user.db'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://techno:123456@localhost:5433/technoapp'
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345678@127.0.0.1:3306/SM'
 
+from model import db, User, Fish, Meat, Chicken, ContactUs
 
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -58,67 +62,145 @@ def unauthorized():
 def homepage():
 
     return render_template("Home.html")
-
-
 @app.route('/Registertion.html', methods=['POST','GET'])
 def register_user():
     if current_user.is_authenticated:
         return redirect(url_for('accountpage'))
+
     form = RegistrationForm()
+
+    # Set graphical password choices for rendering the form
+    set_graphical_password_choices(form)
+
     if form.validate_on_submit():
-        encrypted_password=bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username= form.username.data,email=form.email.data,password=encrypted_password)
+        encrypted_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+
+        # Get selected images for the graphical password
+        selected_images = form.graphical_password.data
+        
+        if len(selected_images) != 3:
+            flash('Please select exactly 3 images for your graphical password', 'danger')
+            return render_template("Registertion.html", form=form)
+
+        user = User(username=form.username.data, email=form.email.data, password=encrypted_password)
         db.session.add(user)
         db.session.commit()
-        flash(f'Registertion successful for {form.username.data}', category='success')
+
+        # Set graphical password
+        user.set_graphical_password(selected_images)
+        db.session.commit()
+
+        flash(f'Registration successful for {form.username.data}', category='success')
         return redirect(url_for('Loginpage'))
 
     return render_template("Registertion.html", form=form)
+
+def set_graphical_password_choices(form):
+    images = get_available_images()
+    # Shuffle the images to provide a random order for selection
+    shuffled_images = sample(images, len(images))
+    # Select only the first 15 images (you can adjust this number based on your needs)
+    selected_images = shuffled_images[:15]
+    form.graphical_password.choices = [(image, image) for image in selected_images]
+
+def get_available_images():
+    image_directory = 'static/img'  # Adjust this path based on your project structure
+    valid_extensions = ['.jpg', '.jpeg', '.png']
+
+    # Filter files based on valid extensions
+    image_files = [file for file in os.listdir(image_directory) if os.path.isfile(os.path.join(image_directory, file)) and file.lower().endswith(tuple(valid_extensions))]
+    return image_files
 
 @app.route("/Login.html", methods=['POST','GET'])
 def Loginpage():
     if current_user.is_authenticated:
         return redirect(url_for('accountpage'))
+
     form = LoginForm()
+
+    # Set graphical password choices for rendering the form
+    set_graphical_password_choices(form)
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password,form.password.data):
+        handle_login(form, user)
+        
+        if user:
+            # Check graphical password
+            selected_images = form.graphical_password.data
+
+            # Ensure exactly 3 images are selected
+            if len(selected_images) != 3:
+                flash('Please select exactly 3 images for your graphical password', 'danger')
+                return render_template("Login.html", form=form)
+
+            if user.check_graphical_password(selected_images) and bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                flash(f'Login successful for {form.email.data}', 'success')
+                return redirect(url_for('homepage'))
+            else:
+                flash('Incorrect graphical password or invalid email/password', 'danger')
+        else:
+            flash('Invalid email or password', 'danger')
+
+    return render_template("Login.html", form=form)
+
+def handle_login(form, user):
+    if user and bcrypt.check_password_hash(user.password, form.password.data):
+        # Check graphical password
+        selected_images = form.graphical_password.data
+        if user.check_graphical_password(selected_images):
             login_user(user)
-            flash(f'LogIn successful for {form.email.data}', category='success')
+            flash(f'Login successful for {form.email.data}', 'success')
             return redirect(url_for('homepage'))
         else:
-            flash(f'LogIn unsuccessful for {form.email.data}', category='danger')
-            #return redirect(url_for('Loginpage'))
-    return render_template("Login.html", form=form)
+            flash('Incorrect graphical password', 'danger')
+    else:
+        flash('Invalid email or password', 'danger')
+        
+        
+
 
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('Loginpage'))
 
-@app.route("/Add_Solution.html", methods=['POST','GET'])
+@app.route("/Chicken_s.html", methods=['POST','GET'])
 @login_required 
-def Add_Solutionpage():
-    form = IosForm()
+def Add_Chicken():
+    form = ChickenForm()
     if form.validate_on_submit():
-        ios = Ios (prosubios= form.prosubios.data, proios=form.proios.data)
-        db.session.add(ios)
+        chicken = Chicken (prosubchicken= form.prosubchicken.data, prochicken=form.prochicken.data)
+        db.session.add(chicken)
         db.session.commit()
         flash(f'Solution added successfully', category='success')
         return redirect(url_for('homepage'))
-    return render_template("Add_Solution.html", form=form)
-    
-@app.route("/android_s.html", methods=['POST','GET'])
+    return render_template("Chicken_s.html", form=form)
+   
+@app.route("/Meat_s.html", methods=['POST','GET'])
 @login_required 
-def Add_Solutionpages():
-    form = AndroidForm()
+def Add_Meat():
+    form = MeatForm()
     if form.validate_on_submit():
-        android = Android (prosubandroid= form.prosubandroid.data, proandroid=form.proandroid.data)
-        db.session.add(android)
+        meat = Meat (prosubmeat= form.prosubmeat.data, promeat=form.promeat.data)
+        db.session.add(meat)
         db.session.commit()
         flash(f'Solution added successfully', category='success')
         return redirect(url_for('homepage'))
-    return render_template("android_s.html", form=form)
+    return render_template("meat_s.html", form=form)
+
+@app.route("/Fish_s.html", methods=['POST','GET'])
+@login_required 
+def Add_Fish():
+    form = FishForm()
+    if form.validate_on_submit():
+        fish = Fish (prosubfish= form.prosubfish.data, profish=form.profish.data)
+        db.session.add(fish)
+        db.session.commit()
+        flash(f'Solution added successfully', category='success')
+        return redirect(url_for('homepage'))
+    return render_template("fish_s.html", form=form)
 
 @app.route("/ContactUs.html", methods=['POST','GET'])
 def ContactUspage():
@@ -131,18 +213,21 @@ def ContactUspage():
         return redirect(url_for('homepage'))
     return render_template("ContactUs.html", form=form )
 
-@app.route("/IOS_Page.html", methods=['POST','GET'])
-def iospage():
-    problem = Ios.query.all()
-
-    return render_template("IOS_Page.html", problem=problem)
-
-@app.route("/android.html", methods=['POST','GET'])
-def androidpage():
-    problem = Android.query.all()
+@app.route("/chicken.html", methods=['POST','GET'])
+def chickenpage():
+    problem = Chicken.query.all()
+    return render_template("Chicken.html", problem=problem)
 
 
-    return render_template("android.html", problem=problem)
+@app.route("/fish.html", methods=['POST','GET'])
+def fishpage():
+    problem = Fish.query.all()
+    return render_template("fish.html", problem=problem)
+
+@app.route("/meat.html", methods=['POST','GET'])
+def meatpage():
+    problem = Meat.query.all()
+    return render_template("meat.html", problem=problem)
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -171,25 +256,6 @@ def accountpage():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pic/'+ current_user.image_file)  
     return render_template('Account.html', form=form,image_file=image_file)
-    # form = AccountForm()
-
-    # if form.validate_on_submit():
-    #     
-
-    #     if form.picture.data:
-    #          image_file=save_image(form.picture.data)
-    #          current_user.image_file = image_file
-    #     current_user.username = form.username.data
-    #     current_user.email = form.email.data
-    #     #db.session.merge(User)
-    #     db.session.commit()
-    #     return redirect(url_for('accountpage'))
-    # if request.method == "GET":
-    #     form.username.data = current_user.username
-    #     form.email.data = current_user.email
-
-    # image_file = url_for('static', filename='profile_pic/'+current_user.image_file)
-    # return render_template("Account.html", form=form, image_file=image_file)
 
 @app.context_processor
 def base():
@@ -200,15 +266,21 @@ def base():
 @login_required 
 def search():
     form = SearchForm()
-    postios = Ios.query
-    postandroid =Android.query
+    postchicken = Chicken.query
+    postfish =Fish.query
+    postmeat =Meat.query
+
     if form.validate_on_submit():
         searched = form.searched.data
-        postios = postios.filter(Ios.prosubios.like('%'+ searched +'%'))
-        postios = postios.order_by(Ios.prosubios).all()
-        postandroid = postandroid.filter(Android.prosubandroid.like('%'+ searched +'%'))
-        postandroid = postandroid.order_by(Android.prosubandroid).all()
-        return render_template("search.html", form=form, searched=searched, postios=postios, postandroid=postandroid)
+        postfish = postfish.filter(Fish.prosubfish.like('%'+ searched +'%'))
+        postfish = postfish.order_by(Fish.prosubfish).all()
+        
+        postmeat = postmeat.filter(Meat.prosubmeat.like('%'+ searched +'%'))
+        postmeat = postmeat.order_by(Meat.prosubmeat).all()
+        
+        postchicken = postchicken.filter(Chicken.prosubchicken.like('%'+ searched +'%'))
+        postchicken = postchicken.order_by(Chicken.prosubchicken).all()
+        return render_template("search.html", form=form, searched=searched, postfish=postfish, postchicken=postchicken , postmeat=postmeat)
     else:
         flash("Please enter input", "danger")
     return redirect(url_for('homepage'))
@@ -270,11 +342,8 @@ def privacy():
 @app.route('/Location.html')
 def location():
     return render_template('Location.html')
-# @app.route('/change_password.html')
-# def update():
-#     render_template('change_password.html')
 
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0", debug=True)
     connect_to_db(app)
     app.run(host="127.0.0.1", port=5001, debug=True)
+
