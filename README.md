@@ -37,7 +37,6 @@ Sarah Mustafa
 ### Sprint 2
 - web design and styling 
 - testing and debugging
-- create a video-demo
 
 ### Installation
 1. clone the repository 
