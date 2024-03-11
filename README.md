@@ -57,7 +57,6 @@ Sarah Mustafa
 6. Start the server
   - $ python3 server.py
 7. follow the link and enjoy! http://127.0.0.1:5001/
-8. The app is deployed on AWS follow the link > 44.200.151.245
 
   
 
