@@ -4,9 +4,6 @@ Sarah Mustafa
 
 - Register and log in.
 - Update user inforamtion and reset user password
-- Search for a Technical problem based on user operating system
-- User able to add and search solutions 
-- Admin can delete users, wrong solutions.
 - Admin is able to view and delete messages
 - location and privacy policy
 ## Tech stack
