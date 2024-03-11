@@ -8,7 +8,7 @@
 <div class="form-group">
     {{form.prosubfish.label(class="form-control-label")}}
     {%if form.prosubfish.errors %}
-    {{form.prosubfish(class="form-control form-control-lg is-invalid")}}
+    {{form.prosubfish(class="form-control form-control-lg is-invalid",)}}
         {%for error in form.prosubfish.errors%}
             <span>{{error}}</span>
         {%endfor%}
@@ -18,16 +18,16 @@
     {%endif%}
 </div>
 <div class="form-group">
-    {{form.profish.label(class="form-control-label")}}
-    {%if form.profish.errors %}
-    {{form.profish(class="form-control form-control-lg is-invalid")}}
-        {%for error in form.profish.errors%}
-            <span>{{error}}</span>
-        {%endfor%}
-        {%else%}
-        
-        {{form.profish(class="form-control form-control-lg")}}
-    {%endif%}
+    {{ form.profish.label(class="form-control-label") }}
+    {% if form.profish.errors %}
+        {{ form.profish(class="form-control form-control-lg is-invalid", style="height: 1000px;") }}
+        {% for error in form.profish.errors %}
+            <span>{{ error }}</span>
+        {% endfor %}
+    {% else %}
+        {{ form.profish(class="form-control form-control-lg", style="height: 200px;") }}
+    {% endif %}
+</div>
 </fieldset>
 <div class="form-group mt-4">
     {{form.submit(class='btn btn-online-info')}}

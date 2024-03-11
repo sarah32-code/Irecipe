@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="container w-50">
-    <form method="POST" action="">
+    <form method="POST" action="{{ url_for('Loginpage') }}">
         {{ form.hidden_tag() }}
         <fieldset>
             <legend class="border-bottom mb-4">Please Login</legend>
@@ -33,16 +34,17 @@
                 {{ form.graphical_password.label(class="form-control-label") }}
                 {% if form.graphical_password.errors %}
                     {{ form.graphical_password(class="form-control form-control-lg is-invalid") }}
-                    {% for error in form.graphical_password.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
+                    <div class="invalid-feedback">
+                        {% for error in form.graphical_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
                 {% else %}
-                <select class="form-control" id="graphical_password" name="graphical_password" multiple style="height: 60px; width: 900px;">
-                    {% for image in form.graphical_password %}
-                        <option value="{{ image.data }}" style="background-image: url('{{ url_for('static', filename='img/' + image.data) }}'); background-size: cover; height: 50px; width: 50px; display: inline-block; margin-right: 10px; margin-bottom: 10px;"></option>
-                    {% if loop.index % 3 == 0 %}</br>{% endif %}
-                    {% endfor %}
-                </select>
+                    <select class="form-control" id="graphical_password" name="graphical_password" multiple style="height: 60px; width: 900px;">
+                        {% for image in form.graphical_password %}
+                            <option value="{{ image.data }}" style="background-image: url('{{ url_for('static', filename='img/' + image.data) }}'); background-size: cover; height: 50px; width: 50px; display: inline-block; margin-right: 10px; margin-bottom: 10px;"></option>
+                        {% endfor %}
+                    </select>
                 {% endif %}
             </div>
         </fieldset>
@@ -54,3 +56,12 @@
     </form>
 </div>
 {% endblock %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}

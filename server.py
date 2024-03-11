@@ -9,15 +9,15 @@ from jinja2 import StrictUndefined
 from  static import img
 from smtplib import SMTP
 from flask_bcrypt import Bcrypt
-# main application file
 from model import connect_to_db, db, User, Fish, Meat, Chicken, ContactUs
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 import os , secrets
 from secret_key import secret_key
 from random import sample
-app=Flask(__name__)
-app.secret_key=secret_key
+import random
 
+app=Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key_here'  
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345678@127.0.0.1:3306/SM'
 
 from model import db, User, Fish, Meat, Chicken, ContactUs
@@ -62,54 +62,56 @@ def unauthorized():
 def homepage():
 
     return render_template("Home.html")
+def set_graphical_password_choices(form):
+    choices = [
+        ('image_1.png', 'Image 1'), ('image_2.png', 'Image 2'), ('image_3.png', 'Image 3'),
+        ('image_4.png', 'Image 4'), ('image_5.png', 'Image 5'), ('image_6.png', 'Image 6'),
+        ('image_7.png', 'Image 7'), ('image_8.png', 'Image 8'), ('image_9.png', 'Image 9'),
+        ('image_10.png', 'Image 10'), ('image_11.png', 'Image 11'), ('image_12.png', 'Image 12'),
+        ('image_13.png', 'Image 13'), ('image_14.png', 'Image 14'), ('image_15.png', 'Image 15'),
+    ]
+    random.shuffle(choices)
+    selected_choices = choices[:15]
+    form.graphical_password.choices = selected_choices
+    return selected_choices
+
 @app.route('/Registertion.html', methods=['POST','GET'])
 def register_user():
     if current_user.is_authenticated:
         return redirect(url_for('accountpage'))
 
     form = RegistrationForm()
+    choices = [
+    ('image_1.png', 'Image 1'), ('image_2.png', 'Image 2'), ('image_3.png', 'Image 3'),
+    ('image_4.png', 'Image 4'), ('image_5.png', 'Image 5'), ('image_6.png', 'Image 6'),
+    ('image_7.png', 'Image 7'), ('image_8.png', 'Image 8'), ('image_9.png', 'Image 9'),
+    ('image_10.png', 'Image 10'), ('image_11.png', 'Image 11'), ('image_12.png', 'Image 12'),
+    ('image_13.png', 'Image 13'), ('image_14.png', 'Image 14'), ('image_15.png', 'Image 15'),
+]
 
-    # Set graphical password choices for rendering the form
+
     set_graphical_password_choices(form)
 
     if form.validate_on_submit():
         encrypted_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-
-        # Get selected images for the graphical password
         selected_images = form.graphical_password.data
-        
-        if len(selected_images) != 3:
-            flash('Please select exactly 3 images for your graphical password', 'danger')
-            return render_template("Registertion.html", form=form)
+        graphical_password = ','.join(selected_images)
 
-        user = User(username=form.username.data, email=form.email.data, password=encrypted_password)
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            password=encrypted_password,
+            graphical_password=graphical_password
+        )
+
         db.session.add(user)
-        db.session.commit()
-
-        # Set graphical password
-        user.set_graphical_password(selected_images)
         db.session.commit()
 
         flash(f'Registration successful for {form.username.data}', category='success')
         return redirect(url_for('Loginpage'))
 
+    #flash(f'Registration unsuccessful for {form.username.data}', category='danger')
     return render_template("Registertion.html", form=form)
-
-def set_graphical_password_choices(form):
-    images = get_available_images()
-    # Shuffle the images to provide a random order for selection
-    shuffled_images = sample(images, len(images))
-    # Select only the first 15 images (you can adjust this number based on your needs)
-    selected_images = shuffled_images[:15]
-    form.graphical_password.choices = [(image, image) for image in selected_images]
-
-def get_available_images():
-    image_directory = 'static/img'  # Adjust this path based on your project structure
-    valid_extensions = ['.jpg', '.jpeg', '.png']
-
-    # Filter files based on valid extensions
-    image_files = [file for file in os.listdir(image_directory) if os.path.isfile(os.path.join(image_directory, file)) and file.lower().endswith(tuple(valid_extensions))]
-    return image_files
 
 @app.route("/Login.html", methods=['POST','GET'])
 def Loginpage():
@@ -117,48 +119,38 @@ def Loginpage():
         return redirect(url_for('accountpage'))
 
     form = LoginForm()
-
-    # Set graphical password choices for rendering the form
+    choices = [
+        ('image_1.png', 'Image 1'), ('image_2.png', 'Image 2'), ('image_3.png', 'Image 3'),
+        ('image_4.png', 'Image 4'), ('image_5.png', 'Image 5'), ('image_6.png', 'Image 6'),
+        ('image_7.png', 'Image 7'), ('image_8.png', 'Image 8'), ('image_9.png', 'Image 9'),
+        ('image_10.png', 'Image 10'), ('image_11.png', 'Image 11'), ('image_12.png', 'Image 12'),
+        ('image_13.png', 'Image 13'), ('image_14.png', 'Image 14'), ('image_15.png', 'Image 15'),
+    ]
     set_graphical_password_choices(form)
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        handle_login(form, user)
-        
-        if user:
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        graphical_password = request.form.getlist('graphical_password')
+
+        app.logger.info(f"Email: {email}, Password: {password}, Graphical Password: {graphical_password}")
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
             # Check graphical password
-            selected_images = form.graphical_password.data
-
-            # Ensure exactly 3 images are selected
-            if len(selected_images) != 3:
-                flash('Please select exactly 3 images for your graphical password', 'danger')
-                return render_template("Login.html", form=form)
-
-            if user.check_graphical_password(selected_images) and bcrypt.check_password_hash(user.password, form.password.data):
+            stored_graphical_password = user.graphical_password.split(',')
+            # Perform authentication logic based on selected images
+            if set(graphical_password) == set(stored_graphical_password):
                 login_user(user)
-                flash(f'Login successful for {form.email.data}', 'success')
+                flash(f'Login successful for {email}', category='success')
                 return redirect(url_for('homepage'))
             else:
-                flash('Incorrect graphical password or invalid email/password', 'danger')
+                flash('Graphical password incorrect', category='danger')
         else:
-            flash('Invalid email or password', 'danger')
+            flash(f'Login unsuccessful for {email}', category='danger')
 
     return render_template("Login.html", form=form)
-
-def handle_login(form, user):
-    if user and bcrypt.check_password_hash(user.password, form.password.data):
-        # Check graphical password
-        selected_images = form.graphical_password.data
-        if user.check_graphical_password(selected_images):
-            login_user(user)
-            flash(f'Login successful for {form.email.data}', 'success')
-            return redirect(url_for('homepage'))
-        else:
-            flash('Incorrect graphical password', 'danger')
-    else:
-        flash('Invalid email or password', 'danger')
-        
-        
 
 
 @app.route('/logout')
@@ -190,7 +182,7 @@ def Add_Meat():
         return redirect(url_for('homepage'))
     return render_template("meat_s.html", form=form)
 
-@app.route("/Fish_s.html", methods=['POST','GET'])
+@app.route("/fish_s.html", methods=['POST','GET'])
 @login_required 
 def Add_Fish():
     form = FishForm()
@@ -213,7 +205,7 @@ def ContactUspage():
         return redirect(url_for('homepage'))
     return render_template("ContactUs.html", form=form )
 
-@app.route("/chicken.html", methods=['POST','GET'])
+@app.route("/Chicken.html", methods=['POST','GET'])
 def chickenpage():
     problem = Chicken.query.all()
     return render_template("Chicken.html", problem=problem)
@@ -250,7 +242,7 @@ def accountpage():
         current_user.email = form.email.data
         db.session.merge(current_user)
         db.session.commit()
-        flash('updated!', 'success')
+        flash(f'updated!', 'success')
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email

@@ -1,3 +1,4 @@
+from turtle import textinput
 from wtforms.widgets import CheckboxInput 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
@@ -13,8 +14,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField(label= 'confirm Password',validators=[DataRequired(), EqualTo('password')])
     graphical_password = SelectMultipleField(
         label='Select 3 Images for Graphical Password',
-        choices=[],
-        option_widget=widgets.CheckboxInput(),  # Use CheckboxInput for multiple selection
+        choices = [
+    ('image_1.png', 'Image 1'), ('image_2.png', 'Image 2'), ('image_3.png', 'Image 3'),
+    ('image_4.png', 'Image 4'), ('image_5.png', 'Image 5'), ('image_6.png', 'Image 6'),
+    ('image_7.png', 'Image 7'), ('image_8.png', 'Image 8'), ('image_9.png', 'Image 9'),
+    ('image_10.png', 'Image 10'), ('image_11.png', 'Image 11'), ('image_12.png', 'Image 12'),
+    ('image_13.png', 'Image 13'), ('image_14.png', 'Image 14'), ('image_15.png', 'Image 15'),
+],
         validators=[DataRequired()],
     )
     submit = SubmitField(label= 'Sign up')
@@ -30,8 +36,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError ('This email is taken')
     
     def validate_graphical_password(self, graphical_password):
-        selected_images = set(graphical_password.data)
-
+        selected_images = graphical_password.data
         # Check if exactly 3 unique images are selected
         if len(selected_images) != 3:
             raise ValidationError('Please select exactly 3 unique images for the graphical password')
@@ -42,26 +47,33 @@ class LoginForm(FlaskForm):
     password = PasswordField(label='Password',validators=[DataRequired(), Length(min=3, max=20)])
     graphical_password = SelectMultipleField(
         label='Select 3 Images for Graphical Password',
-        choices=[],  # Will be dynamically set in the route
+        choices = [
+    ('image_1.png', 'Image 1'), ('image_2.png', 'Image 2'), ('image_3.png', 'Image 3'),
+    ('image_4.png', 'Image 4'), ('image_5.png', 'Image 5'), ('image_6.png', 'Image 6'),
+    ('image_7.png', 'Image 7'), ('image_8.png', 'Image 8'), ('image_9.png', 'Image 9'),
+    ('image_10.png', 'Image 10'), ('image_11.png', 'Image 11'), ('image_12.png', 'Image 12'),
+    ('image_13.png', 'Image 13'), ('image_14.png', 'Image 14'), ('image_15.png', 'Image 15'),
+],
+
         validators=[DataRequired()],
     )
     submit = SubmitField('Login')
 
 
 class ChickenForm(FlaskForm):
-    prosubchicken = StringField(label= 'Subject',validators=[DataRequired(), Length(min=3, max=50)])
-    prochicken = StringField(label='Your solution',validators=[DataRequired(), Length(min=10, max=300)])
-    submit = SubmitField(label= 'Add solution')
+    prosubchicken = StringField(label= 'Recpie Name',validators=[DataRequired(), Length(min=3, max=50)])
+    prochicken = StringField(label='Recpie Details',validators=[DataRequired(), Length(min=10, max=300)])
+    submit = SubmitField(label= 'Add Recpie')
 
 class FishForm(FlaskForm):
-    prosubfish = StringField(label= 'Subject',validators=[DataRequired(), Length(min=3, max=50)])
-    profish = StringField(label='Your solution',validators=[DataRequired(), Length(min=10, max=300)])
-    submit = SubmitField(label= 'Add solution')
+    prosubfish = StringField(label= 'Recpie Name',validators=[DataRequired(), Length(min=3, max=50)])
+    profish = StringField(label='Recpie Details',validators=[DataRequired(), Length(min=10, max=300)])
+    submit = SubmitField(label= 'Add Recpie')
 
 class MeatForm(FlaskForm):
-    prosubmeat = StringField(label= 'Subject',validators=[DataRequired(), Length(min=3, max=50)])
-    promeat = StringField(label='Your solution',validators=[DataRequired(), Length(min=3, max=300)])
-    submit = SubmitField(label= 'Add solution')   
+    prosubmeat = StringField(label= 'Recpie Name',validators=[DataRequired(), Length(min=3, max=50)])
+    promeat = StringField(label='Recpie Details',validators=[DataRequired(), Length(min=3, max=300)])
+    submit = SubmitField(label= 'Add Recpie')   
 
 class ContactUsForm(FlaskForm):
     username = StringField(label='Username',validators=[DataRequired(), Length(min=3, max=20)])
@@ -85,10 +97,7 @@ class ResetPasswordForm(FlaskForm):
 class AccountForm(FlaskForm):
     username = StringField(label='Username',validators=[DataRequired(), Length(min=3, max=20)])
     email = StringField(label= 'Email',validators=[DataRequired(), Email()])
-    password = PasswordField(label='Password', validators=[DataRequired(), Length(min=8), Regexp(regex=r'.*[A-Z].*', message="Password must contain at least one uppercase letter"), Regexp(regex=r'.*[a-z].*', message="Password must contain at least one lowercase letter"), Regexp(regex=r'.*\d.*', message="Password must contain at least one digit")])
-    confirm_password = PasswordField(label= 'Confirm Password',validators=[DataRequired(), EqualTo('password')])
     picture = FileField(label="Upload Profile Picture", validators=[FileAllowed(['jpg','png'])])
-    graphical_password = SelectMultipleField(label='Select 3 Images for Graphical Password', choices=[], validators=[DataRequired()])
     submit = SubmitField(label= 'Update Account')
 
     def validate_username(self, username):
@@ -102,7 +111,3 @@ class AccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError ('This email is taken')
-    
-    # def validate_graphical_password(self, graphical_password):
-    #     if len(graphical_password.data) != 3:
-    #         raise ValidationError('Please select exactly 3 images for the graphical password')

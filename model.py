@@ -53,7 +53,7 @@ class Fish(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     prosubfish = db.Column(db.String(100), nullable=False) 
-    profish = db.Column(db.String(500), nullable=False)  
+    profish = db.Column(db.String(5000), nullable=False)  
 
     def __repr__(self):
         return f'{self.prosubfish}:{self.profish}'
@@ -62,7 +62,7 @@ class Chicken(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     prosubchicken = db.Column(db.String(100), nullable=False) 
-    prohicken = db.Column(db.String(500), nullable=False)  
+    prohicken = db.Column(db.String(5000), nullable=False)  
 
     def __repr__(self):
         return f'{self.prosubchicken}:{self.prochicken}'
@@ -71,7 +71,7 @@ class Meat(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     prosubmeat = db.Column(db.String(100), nullable=False) 
-    promeat = db.Column(db.String(500), nullable=False)  
+    promeat = db.Column(db.String(5000), nullable=False)  
 
     def __repr__(self):
         return f'{self.prosubmeat}:{self.promeat}'  

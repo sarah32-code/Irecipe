@@ -18,16 +18,17 @@
     {%endif%}
 </div>
 <div class="form-group">
-    {{form.promeat.label(class="form-control-label")}}
-    {%if form.promeat.errors %}
-    {{form.promeat(class="form-control form-control-lg is-invalid")}}
-        {%for error in form.promeat.errors%}
-            <span>{{error}}</span>
-        {%endfor%}
-        {%else%}
-        
-        {{form.promeat(class="form-control form-control-lg")}}
-    {%endif%}
+    {{ form.promeat.label(class="form-control-label") }}
+    {% if form.promeat.errors %}
+        {{ form.promeat(class="form-control form-control-lg is-invalid", style="height: 1000px;") }}
+        {% for error in form.promeat.errors %}
+            <span>{{ error }}</span>
+        {% endfor %}
+    {% else %}
+        {{ form.promeat(class="form-control form-control-lg", style="height: 200px;") }}
+    {% endif %}
+</div>
+
 </fieldset>
 <div class="form-group mt-4">
     {{form.submit(class='btn btn-online-info')}}

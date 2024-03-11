@@ -13,52 +13,43 @@
     <thead>
     <tr class="active">
     <th>Name</th>
-    <th>Version</th>
-    <th>date</th>
+    <th>Campus ID</th>
+    <th>Email</th>
   </tr>
   <tr class="info">
-    <td>IOS</td>
-    <td>16.2</td>
-    <td>December 13, 2022</td>
+    <td>Sarah Mustafa</td>
+    <td>Smustafa2</td>
+    <td>Smustafa2@student.gus.ed</td>
   </tr>
   <tr>
-    <td>IOS</td>
-    <td>16.3 beta</td>
-    <td>December 14, 2022</td>
+    <td>Congqi Xu</td>
+    <td>CXu6</td>
+    <td>cxu6@student.gsu.edu</td>
   </tr>
 
     <tr class="info">
-    <td>IOS</td>
-    <td>14.8.1</td>
-    <td>October 26, 2021</td>
+    <td>Name</td>
+    <td>Campus ID</td>
+    <td>Email</td>
   </tr>
 
   <tr>
-    <td>IOS</td>
-    <td>13.7</td>
-    <td>September 1, 2020</td>
+    <td>Name</td>
+    <td>Campus ID</td>
+    <td>Email</td>
   </tr>
 
   <tr class="success">
-    <td>Android</td>
-    <td>13</td>
-    <td>August 15, 2022</td>
+    <td>Name</td>
+    <td>Campus ID</td>
+    <td>Email</td>
   </tr>
   <tr>
-    <td>Android</td>
-    <td>12</td>
-    <td>October 04, 2021</td>
+    <td>Name</td>
+    <td>Campus ID</td>
+    <td>Email</td>
   </tr>
-  <tr class="success">
-    <td>Android</td>
-    <td>11</td>
-    <td>September 08, 2020</td>
-  </tr>
-  <tr>
-    <td>Android</td>
-    <td>10</td>
-    <td>September 03, 2019</td>
-  </tr>
+  
     </tbody>
   </table>
 </div>

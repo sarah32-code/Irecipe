@@ -1,1 +1,1 @@
-secret_key= "this is techno db"
+secret_key= "this is sm db"
