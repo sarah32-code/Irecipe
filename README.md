@@ -38,6 +38,10 @@ Sarah Mustafa
 - web design and styling 
 - testing and debugging
 
+### Sprint 3
+-add more styling
+-Create Demo
+
 ### Installation
 1. clone the repository 
 2. Activate virtual environment
