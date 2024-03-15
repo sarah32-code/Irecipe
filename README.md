@@ -6,6 +6,8 @@
 - Update user inforamtion and reset user password
 - Admin is able to view and delete messages
 - location and privacy policy
+- choose ingredient and browse recipes available
+  
 ## Tech stack
 
   - PostgreSQL
