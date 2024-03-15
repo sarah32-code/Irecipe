@@ -39,8 +39,8 @@ Sarah Mustafa
 - testing and debugging
 
 ### Sprint 3
--add more styling
--Create Demo
+- add more styling
+- Create Demo
 
 ### Installation
 1. clone the repository 
